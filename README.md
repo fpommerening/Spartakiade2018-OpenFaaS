@@ -1,0 +1,1 @@
+# Spartakiade2018-OpenFaaS
