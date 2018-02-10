@@ -65,9 +65,9 @@ Die folgende Liste gibt einen Überblick über mögliche Themen.
 Hinweis: Die Beispiele sind mit .NET Core 2 erstellt. Andere Programmiersprachen z.B. node.js, python, ruby oder go sind möglich. 
 
 <a name="voraussetzungen"></a>
-3. Teilnehmer-Voraussetzungen / Vorbereitung
-[x] Notebook mit <a href="https://code.visualstudio.com/" target="_blank">Visual Studio Code</a>
-[x] Dockerumgebung z.B. <a href="https://www.docker.com/products/docker-toolbox" target="_blank">Docker-Toolbox</a> oder <a href="https://docs.docker.com/docker-for-windows/" target="_blank"> Docker for Windows</a> (<b>empfohlen</b>)<br/>
+3. Teilnehmer-Voraussetzungen / Vorbereitung<br />
+[x] Notebook mit <a href="https://code.visualstudio.com/" target="_blank">Visual Studio Code</a><br />
+[x] Dockerumgebung z.B. <a href="https://docs.docker.com/docker-for-windows/" target="_blank"> Docker for Windows</a> <br/>
 [x] HTTP-Testtool z.B. <a href="https://www.getpostman.com/" target="_blank">Postman</a><br />
 [x] <a href="https://www.microsoft.com/net/core#windowscmd" target="_blank">.NET Core 2.0 SDK </a><br />
 
