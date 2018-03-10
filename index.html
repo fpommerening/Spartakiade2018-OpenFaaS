@@ -9,6 +9,7 @@
 <meta name="author" content="Frank Pommerening">
 
 <link rel="stylesheet" href="./common/css/reveal.css">
+<link rel="stylesheet" href="./common/css/global.css">
 <link rel="stylesheet" href="./common/css/theme/black.css" id="theme">
 
 <!-- Theme used for syntax highlighting of code -->
@@ -22,16 +23,6 @@
     link.href = window.location.search.match(/print-pdf/gi) ? './common/css/print/pdf.css' : './common/css/print/paper.css';
     document.getElementsByTagName('head')[0].appendChild(link);
 </script>
-
-<style>
-    a.infolink {
-        width: 40px;
-        height: 40px;
-        display: inline-block;
-        background-image: url("images/about.svg");
-        background-size: cover;
-    }
-</style>
 
 <body>
     <div class="reveal">
@@ -66,7 +57,6 @@
                     <br/>
                     <br/>
                     <ul>
-
                         <li>Consulting (fachlich & IT)
                             <ul>
                                 <li>Requirements Engineering / Projektmanagement </li>
@@ -90,20 +80,379 @@
             </section>
             <section>
                 <section>
-                    <h2>OpenFaaS Architektur</h2>
+                    <h2>OpenFaaS - Basics</h2>
                     <img src="images/openfaas_logo.png" style="border: 0px;background: transparent;" />
                 </section>
                 <section>
-                    <h3></h3>
+                    <ul>
+                        <li>Framework für Serverless Functions</li>
+                        <li>Open source
+                            <a href="https://github.com/openfaas/faas" target="_blank">GitHub</a>
+                        </li>
+                        <li>Integriertes Portal (UI) für Deployment / Test</li>
+                        <li>Ausführung auf Docker Swarm oder Kubernetes</li>
+                        <li>Skalierbar</li>
+                        <li>Synchrone / Asynchrone Ausführung</li>
+                        <li>Verwendung diverser Programmiersprachen GO, node.js, .NET ...</li>
+                    </ul>
+                    <br />
+                    <br /> Die Funktionen erhalten die Anfragen per HTTP POST/GET und Port 8080.
                 </section>
                 <section>
-                    <h3>Funktionsaufrufe</h3>
+                    <h3>Architektur</h3>
+                    <img src="images/openfaas.svg" style="border:0px;width:1000px" />
+                </section>
+                <section>
+                    <h4>Function Watchdog</h4>
+                    <ul>
+                        <li>kleiner HTTP-Server</li>
+                        <li>geschrieben in Golang</li>
+                        <li>erlaubt die Nutzung jedes Consolen-Programmes als Funktion</li>
+                        <li>Sendet HTTP-Anfrage an STDIN (Consolen Eingaben) des Zielprogramms</li>
+                        <li>Empfängt STDOUT (Consolen Ausgabe) und sendet sie per HTTP</li>
+                    </ul>
                 </section>
             </section>
             <section>
                 <section>
                     <h2>Basistechnologien</h2>
                     <img src="images/docker_logo.png" style="border: 0px;background: transparent;Height:500px" />
+                </section>
+                <section>
+                    <img src="images/swarmlogo.jpg" style="width: 200px;border: 0;float:right" />
+                    <img src="images/kubernetes.svg" style="width: 200px;border: 0;float:left" /> Docker Swarm
+                    <br/> Docker Stack
+                    <br /> Docker Config / Secrets
+                    <br />
+                    <br /> Kubernetes
+                </section>
+            </section>
+            <section>
+                <section>
+                    <h2>Docker Swarm / Docker Swarm Mode</h2>
+                    <img src="images/swarmlogo.jpg" style="width: 300px;border: 0" />
+                    <p class="fragment">Container-Cluster über mehrere Docker-Hosts</p>
+                </section>
+                <section>
+                    <h3>Docker Swarm Visualizer</h3>
+                    <p style="text-align: left">
+                        Das Tool Docker Swarm Visualizer gestattet eine Übersicht der laufenden Services und Hosts.
+                        <img src="images/visualizer.png" style="border: 0;height: 350px;float:right">
+                        <br />
+                        <br /> Lizenz: Apache
+                        <a href="https://github.com/dockersamples/docker-swarm-visualizer" target="_blank">GitHub</a>
+                        <br />
+                        <br /> Verfügbare Container:
+                        <br />
+                        <ul>
+                            <li>Linux x64:
+                                <a href="https://hub.docker.com/r/dockersamples/visualizer/" target="_blank">dockersamples/visualizer</a>
+                            </li>
+                            <li>Linux arm:
+                                <a href="https://hub.docker.com/r/alexellis2/visualizer-arm/" target="_blank">alexellis2/visualizer-arm</a>
+                            </li>
+                            <li>Windows:
+                                <a href="https://hub.docker.com/r/stefanscherer/visualizer-windows/" target="_blank">stefanscherer/visualizer-windows</a>
+                            </li>
+                        </ul>
+                    </p>
+                </section>
+                <section>
+                    <h3>Docker Swarm
+                        <a href="https://docs.docker.com/engine/reference/commandline/swarm/" target="_blank" class="infolink"></a>
+                    </h3>
+                    <h4>Cluster / Swarm initalisieren</h4>
+                    <pre><code class="docker">docker swarm init [OPTIONS] </code></pre>
+                    <p style="text-align: left">
+                        Nach erfolgreicher Erstellung werden der Token und Befehl zum Hinzufügen angezeigt.
+                    </p>
+                    <h4>Knoten hinzufügen</h4>
+                    <pre><code class="docker">docker swarm join [OPTIONS] HOST:PORT</code></pre>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>-- token TOKEN</td>
+                                <td>Zugriffstoken zur Authentifizierung beim Manager</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+                <section>
+                    <h4>Knoten entfernen</h4>
+                    <pre><code class="docker">docker swarm leave [OPTIONS]</code></pre>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>--force / -f</td>
+                                <td>Erzwingt das Verlassung und ignoriert Warnungen
+                                    <br/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    WICHTIG: die Node muss noch mein Manager abgemeldet werden!
+                    <br/>
+                    <br/>
+                    <h4>Zugriffstoken anzeigen</h4>
+                    <pre><code class="docker">docker swarm join-token [OPTIONS] (worker|manager)</code></pre>
+                    <h4>Cluster / Swarm aktualsieren</h4>
+                    <pre><code class="docker">docker swarm Update [OPTIONS]</code></pre>
+                </section>
+            </section>
+            <section>
+                <section>
+                    <h2>Docker Service</h2>
+                    <img src="images/swarmlogo.jpg" style="width: 300px;border: 0" />
+                </section>
+                <section>
+                    Anwendungen die Cluster bereitgestellt werden, werden als Services bezeichnet. Um den Service auf mehreren Nodes bereitzustellen,
+                    muss das Image in einer Registry abgelegt sein.
+                </section>
+                <section>
+
+                    <h4>Service erstellen
+                        <a href="https://docs.docker.com/engine/reference/commandline/service_create/" target="_blank" class="infolink"></a>
+                    </h4>
+                    <pre><code class="docker">docker service create [OPTIONS] IMAGE [COMMAND] [ARG...]</code></pre>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>--name</td>
+                                <td>Name für den Service</td>
+                            </tr>
+                            <tr>
+                                <td>--network</td>
+                                <td>Verwendetes Netzwerk</td>
+                            </tr>
+                            <tr>
+                                <td>--publish, -p</td>
+                                <td>Veröffentlicht den Port</td>
+                            </tr>
+                            <tr>
+                                <td>--replicas</td>
+                                <td>Zahl der gleichzeitig laufenden Instanzen</td>
+                            </tr>
+                            <tr>
+                                <td>--config</td>
+                                <td>Zuordnung einer Konfiguration (API 1.3+)</td>
+                            </tr>
+                            <tr>
+                                <td>--secret</td>
+                                <td>Zuordnung von Zugangsdaten (API 1.25+)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+                <section>
+                    <h4>Services entfernen
+                        <a href="https://docs.docker.com/engine/reference/commandline/service_rm/" target="_blank" class="infolink"></a>
+                    </h4>
+                    <pre><code class="docker">docker service rm SERVICE</code></pre>
+                    <h4>Services anzeigen
+                        <a href="https://docs.docker.com/engine/reference/commandline/service_ls/" target="_blank" class="infolink"></a>
+                    </h4>
+                    <pre><code class="docker">docker service ls [OPTIONS] </code></pre>
+                    <h4>Details zu / zum Services anzeigen
+                        <a href="https://docs.docker.com/engine/reference/commandline/service_inspect/" target="_blank" class="infolink"></a>
+                    </h4>
+                    <pre><code class="docker">docker service inspect [OPTIONS] SERVICE</code></pre>
+                    <h4>Services hoch/runter skalieren
+                        <a href="https://docs.docker.com/engine/reference/commandline/service_scale/" target="_blank" class="infolink"></a>
+                    </h4>
+                    <pre><code class="docker">docker service scale SERVICE=ANZAHL</code></pre>
+                    <h4>Logs eines Services anzeinge
+                        <a href="https://docs.docker.com/engine/reference/commandline/service_logs/" target="_blank" class="infolink"></a>
+                    </h4>
+                    <pre><code class="docker">docker service logs [OPTIONS] SERVICE</code></pre>
+                </section>
+                <section>
+                    <h4>Service aktualisieren API 1.24+
+                        <a href="https://docs.docker.com/engine/reference/commandline/service_update/" target="_blank" class="infolink"></a>
+                    </h4>
+                    <pre><code class="docker">docker service update [OPTIONS] SERVICE</code></pre>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>--config-[add][rm]</td>
+                                <td>1.30+</td>
+                                <td>Konfiguration ergänzen / entfernen</td>
+                            </tr>
+                            <tr>
+                                <td>--network-[add][rm]</td>
+                                <td>1.29+</td>
+                                <td>Netzwerk ergänzen / entfernen</td>
+                            </tr>
+                            <tr>
+                                <td>--secret-[add][rm]</td>
+                                <td>1.25+</td>
+                                <td>Zugangsdaten ergänzen / entfernen</td>
+                            </tr>
+                            <tr>
+                                <td>--publish-[add][rm]</td>
+                                <td></td>
+                                <td>Veröffentlichtung ergänzen / entfernen</td>
+                            </tr>
+                            <tr>
+                                <td>--env-[add][rm]</td>
+                                <td></td>
+                                <td>Variable ergänzen / entfernen</td>
+                            </tr>
+                            <tr>
+                                <td>--limit-cpu / --limit-memory</td>
+                                <td></td>
+                                <td>Ressourcen ändern</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </section>
+            <section>
+                <section>
+                    <h2>Docker Stack</h2>
+                    <img src="images/composelogo.png" style="width: 300px;border: 0" />
+                    <p class="fragment">Zusammenfassung mehrerer Container zu einem Anwendungsstack</p>
+                </section>
+                <section>
+                    <h3>Stack / Compose-File
+                        <a href="https://docs.docker.com/compose/compose-file/compose-versioning/" target="_blank" class="infolink"></a>
+                    </h3>
+                    Eine yaml bzw. yml - Datei, welche die Struktur und Konfiguration des Anwendungsstacks definiert.
+                    <br />
+                    <br /> Standard: docker-compose.yml
+                    <br />
+                    <br /> Versionen / Formate: Ohne Angabe im Header gilt Version 1!
+
+                </section>
+                <section>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>Format / Version</th>
+                                <th>Docker-Version</th>
+                                <th>Hinweise</th>
+                            </tr>
+                            <tr>
+                                <td>3.5</td>
+                                <td>17.12.0+</td>
+                                <td>Isolation</td>
+                            </tr>
+                            <tr>
+                                <td>3.3</td>
+                                <td>17.06.0+</td>
+                                <td>Config / Secrets</td>
+                            </tr>
+                            <tr>
+                                <td>3.0
+                                    <br/> 3.1
+                                    <br/>3.2</td>
+                                <td>1.13.0+
+                                    <br/>1.13.1+
+                                    <br/>17.04.0+</td>
+                                <td>Empfohlene Version
+                                    <br />Erlaubt Verknüpfung mit Docker Swarm</td>
+                            </tr>
+                            <tr>
+                                <td>2.1</td>
+                                <td>1.12.0+</td>
+                                <td>Healthcheck</td>
+                            </tr>
+                            <tr>
+                                <td>2.0</td>
+                                <td>1.10.0+</td>
+                                <td>Networks, Dependency</td>
+                            </tr>
+                            <tr>
+                                <td>1.0</td>
+                                <td>1.9.1+</td>
+                                <td>in zukünftiger Version deprecated / veraltet</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+                <section>
+                    <h3>Verteilte Anwendungsstack-Operationen</a>
+                    </h3>
+                    <h4>Stack bereitstellen / aktualisieren
+                        <a href="https://docs.docker.com/engine/reference/commandline/stack_deploy/" target="_blank" class="infolink"></a>
+                    </h4>
+                    <pre><code class="docker">docker stack deploy [OPTIONS] STACK</code></pre>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>--compose-file, -c</td>
+                                <td>Compose-File (API 1.25+)</td>
+                            </tr>
+                            <tr>
+                                <td>--resolve-image</td>
+                                <td>Fragt das Image von der Registry ab (API 1.30+)</td>
+                            </tr>
+                            <tr>
+                                <td>--prune</td>
+                                <td>Entfernt nicht mehr verwendete Services (API 1.27)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+                <section>
+                    <h4>Stack entfernen
+                        <a href="https://docs.docker.com/engine/reference/commandline/stack_rm/" target="_blank" class="infolink"></a>
+                    </h4>
+                    <pre><code class="docker">docker stack rm STACK</code></pre>
+                    <h4>Stacks anzeigen
+                        <a href="https://docs.docker.com/engine/reference/commandline/stack_ls/" target="_blank" class="infolink"></a>
+                    </h4>
+                    <pre><code class="docker">docker stack ls [OPTIONS]</code></pre>
+                    <h4>Services eines Stack anzeigen
+                        <a href="https://docs.docker.com/engine/reference/commandline/stack_services/" target="_blank" class="infolink"></a>
+                    </h4>
+                    <pre><code class="docker">docker stack services [OPTIONS] STACK</code></pre>
+                </section>
+            </section>
+            <section>
+                <section>
+                    <h2>Docker Config / Docker Secret</h2>
+                    <p class="fragment">Zugangsdaten / Konfiguration nur für verteilte System</p>
+                </section>
+                <section>
+                    <h3>Zugangsdaten verwalten (API 1.25+)</h3>
+                    Wichtig: Inhalt kann per Docker-CLI angezeigt
+                    <b>nicht</b> werden.
+                    <h4>Zugangsdaten anlegen
+                        <a href="https://docs.docker.com/engine/reference/commandline/secret_create/" target="_blank" class="infolink"></a>
+                    </h4>
+                    <pre><code class="docker">docker secret create [OPTIONS] SECRET [file|-]</code></pre>
+                    <h4>Zugangsdaten anzeigen
+                        <a href="https://docs.docker.com/engine/reference/commandline/secret_ls/" target="_blank" class="infolink"></a>
+                    </h4>
+                    <pre><code class="docker">docker secret ls</code></pre>
+                    <h4>Zugangsdaten Details anzeigen
+                        <a href="https://docs.docker.com/engine/reference/commandline/secret_inspect/" target="_blank" class="infolink"></a>
+                    </h4>
+                    <pre><code class="docker">docker secret inspect [OPTIONS] SECRET</code></pre>
+                    <h4>Zugangsdaten löschen
+                        <a href="https://docs.docker.com/engine/reference/commandline/secret_rm/" target="_blank" class="infolink"></a>
+                    </h4>
+                    <pre><code class="docker">docker secret rm SECRET</code></pre>
+                </section>
+                <section>
+                    <h3>Konfiguration verwalten (API 1.30+)</h3>
+                    Inhalt kann per Docker-CLI angezeigt werden.
+                    <h4>Konfiguration anlegen
+                        <a href="https://docs.docker.com/engine/reference/commandline/config_create/" target="_blank" class="infolink"></a>
+                    </h4>
+                    <pre><code class="docker">docker config create [OPTIONS] CONFIG [file|-]</code></pre>
+                    <h4>Konfiguration anzeigen
+                        <a href="https://docs.docker.com/engine/reference/commandline/config_ls/" target="_blank" class="infolink"></a>
+                    </h4>
+                    <pre><code class="docker">docker config ls</code></pre>
+                    <h4>Konfiguration Details anzeigen
+                        <a href="https://docs.docker.com/engine/reference/commandline/config_inspect/" target="_blank" class="infolink"></a>
+                    </h4>
+                    <pre><code class="docker">docker config inspect [OPTIONS] CONFIG</code></pre>
+                    <h4>Konfiguration löschen
+                        <a href="https://docs.docker.com/engine/reference/commandline/config_rm/" target="_blank" class="infolink"></a>
+                    </h4>
+                    <pre><code class="docker">docker config rm CONFIG</code></pre>
                 </section>
             </section>
             <section>
@@ -112,22 +461,258 @@
                     <img src="images/openfaas_logo.png" style="border: 0px;background: transparent;" />
                 </section>
                 <section>
+                    ConsoleLineInterface für OpenFaaS
+                    <br/> Open-Source (
+                    <a href="https://github.com/openfaas/faas-cli" target="_blank">GitHub</a>)
+                    <br /> geschrieben in Golang
+                    <br/> Multiplattform (Windows, Linux, Mac)
+                    <br /> Multiachitektur (x64, ARM32, ARM64)
+                    <br /> offen für eigene Templates
+                    <br />
+                </section>
+                <section>
+                    <h4>Download</h4>
+                    Curl (Utility script)
+                    <pre><code class="shell">$ curl -sSL https://cli.openfaas.com | sh</code></pre> Brew
+                    <pre><code class="shell">$ brew install faas-cli</code></pre> Powershell
+                    <pre><code class="powershell">$version = (Invoke-WebRequest "https://api.github.com/repos/openfaas/faas-cli/releases/latest" 
+	| ConvertFrom-Json)[0].tag_name   
+(New-Object System.Net.WebClient).DownloadFile("https://github.com/openfaas/
+	faas-cli/releases/download/$version/faas-cli.exe", "faas-cli.exe")</code></pre>
+                </section>
+                <section>
+                    <h4>Funktion aus Template erstellen</h4>
+                    <pre><code class="shell">faas-cli new [FUNCTION --lang TEMPLATE] [-a YAML-File] [-g URL] [--list]</code></pre>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>-a / --append</td>
+                                <td>fügt die neue Funktion zu bestehende Stack hinzu</td>
+                            </tr>
+                            <tr>
+                                <td>-g / --gateway</td>
+                                <td>URL OpenFaaS Gateway</td>
+                            </tr>
+                            <tr>
+                                <td>--list</td>
+                                <td>Anzeige der verfügbaren Templates</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br/>
+                    <h4>Funktions-Container bauen</h4>
+                    <pre><code class="shell">faas-cli build -f YAML-File [--filter FILTER] [--no-cache]</code></pre>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>-f</td>
+                                <td>Dateipfad zur Stack-YAML-Datei</td>
+                            </tr>
+                            <tr>
+                                <td>--filter</td>
+                                <td>Filter auf bestimmte Funktionen</td>
+                            </tr>
+                            <tr>
+                                <td>--no-cache</td>
+                                <td>Erstellung ohne Docker-Cache</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+                <section>
+                    <h4>Funktion im Gateway bereitstellen</h4>
+                    <pre><code class="shell">faas-cli deploy [-f YAML-File] [--filter FILTER] [--replace] [--update]</code></pre>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>-f</td>
+                                <td>Dateipfad zur Stack-YAML-Datei</td>
+                            </tr>
+                            <tr>
+                                <td>--filter</td>
+                                <td>Filter auf bestimmte Funktionen</td>
+                            </tr>
+                            <tr>
+                                <td>--replace</td>
+                                <td>Bestehende Funktion entfernen und neuerstellen</td>
+                            </tr>
+                            <tr>
+                                <td>--update</td>
+                                <td>Rollierendes Updates durchführen (Default: true)</td>
+                            </tr>
+                            <tr>
+                                <td>--network</td>
+                                <td>Name des Funktions-Netzwerks (Default: func_functions)</td>
+                            </tr>
+                            <tr>
+                                <td>--image</td>
+                                <td>Docker-Image</td>
+                            </tr>
+                            <tr>
+                                <td>--name</td>
+                                <td>Funktions-Name</td>
+                            </tr>
+                            <tr>
+                                <td>--secret</td>
+                                <td>Docker-Secrets verknüpfen</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+                <section>
+                    <h4>Funktion aus Gateway entfernen</h4>
+                    <pre><code class="shell">faas-cli remove [-f YAML-File] [--filter FILTER]</code></pre>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>-f</td>
+                                <td>Dateipfad zur Stack-YAML-Datei</td>
+                            </tr>
+                            <tr>
+                                <td>--filter</td>
+                                <td>Filter auf bestimmte Funktionen</td>
+                            </tr>
+                            <tr>
+                                <td>--gateway</td>
+                                <td>URL OpenFaaS Gateway</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br/>
+                    <h4>Funktions-Image(s) an Registry übertragen</h4>
+                    <pre><code class="shell">faas-cli push [-f YAML-File] [--filter FILTER]</code></pre> WICHTIG: vorher per Docker LOGIN am Docker-Hub anmelden!
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>-f</td>
+                                <td>Dateipfad zur Stack-YAML-Datei</td>
+                            </tr>
+                            <tr>
+                                <td>--filter</td>
+                                <td>Filter auf bestimmte Funktionen</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+                <section>
+                    <h4>Anmeldung an Gateway mit Basic-Authentifizierung</h4>
+                    <pre><code class="shell">faas-cli login -u USER -p PASSWORT --gateway URL</code></pre>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>-u / --username</td>
+                                <td>Benutzername</td>
+                            </tr>
+                            <tr>
+                                <td>-p / --password</td>
+                                <td>Passwort</td>
+                            </tr>
+                            <tr>
+                                <td>-g / --gateway</td>
+                                <td>URL für OpenFaaS Gateway</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br/>
+                    <h4>Abmeldung von Gateway mit Authentifizierung</h4>
+                    <pre><code class="shell">faas-cli logout --gateway URL</code></pre>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>-g / --gateway</td>
+                                <td>URL für OpenFaaS Gateway</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+                <section>
                     <h3>Eigene Vorlagen</h3>
+                    Zusätzliche Templates werden in (eigenen) Git-Repositories verwaltet.
+                    <br /> Vorlagen werden je Ordner (Stack-Root) verwaltet.
+                    <br />
+                    <br />
+                    <h4>Templates abrufen</h4>
+                    <pre><code class="shell">faas-cli template pull GIT-URL [--overwrite]</code></pre>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>--overwrite</td>
+                                <td>Bestehende (gleichnamige) Vorlagen ersetzen</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br /> Beispiele (Auswahl):
+                    <br/>
+                    <p style="font-size:medium">
+                        PHP https://github.com/itscaro/openfaas-template-php/
+                        <br/> CSharp (TDD, COMMON) https://github.com/fpommerening/openfaas-template-csharp
+                        <br/> CSharp (Kestrel) https://github.com/BurtonR/csharp-kestrel-template
+                        <br/> Java https://github.com/tmobile/faas-java-templates
+                        <br/> GO https://github.com/alexellis/golang-http-template
+                        <br/>
+                    </p>
+                </section>
+                <section>
+                    <h3>Struktur für eigene Vorlagen
+                        <a href="https://github.com/openfaas/faas-cli/blob/master/guide/TEMPLATE.md"
+                            target="_blank" class="infolink"></a>
+                        </h4>
+                    </h3>
+                    <img src="images/template.svg" style="border:0px;width:900px" />
                 </section>
             </section>
             <section>
                 <section>
-                    <h2>OpenFaaS in Product</h2>
+                    <h2>OpenFaaS in Production</h2>
                     <img src="images/openfaas_logo.png" style="border: 0px;background: transparent;" />
                 </section>
                 <section>
                     <h3>HTTPS-Verschlüsselung mit Let's Encrypt</h3>
+                    <img src="images/nginx_ssl.svg" style="border: 0px;background: transparent;width:900px" />
                 </section>
                 <section>
-                    <h3>HTTP-Authentifizierung</h3>
+                    <h3>HTTP-Authentifizierung
+                        <a href="https://github.com/openfaas/faas/blob/master/contrib/nginx/README.md" target="_blank" class="infolink"></a>
+
+                    </h3>
                 </section>
                 <section>
-                    <h3>Alexa-Backend</h3>
+                    <h3>HTTPS + Authentifizierung (Traefik)
+                        <a href="https://github.com/openfaas/faas/blob/master/contrib/nginx/README.md" target="_blank" class="infolink"></a>
+
+                    </h3>
+                </section>
+            </section>
+            <section>
+                <section>
+                    <h2>OpenFaaS - Implementation</h2>
+                    <img src="images/openfaas_logo.png" style="border: 0px;background: transparent;" />
+                </section>
+                <section>
+                    <h3>TDD</h3>
+                </section>
+                <section>
+                    <h3>CQRS</h3>
+                </section>
+                <section>
+                    <h3>Zeitgesteuerte Funktionen</h3>
+                </section>
+            </section>
+            <section>
+                <section>
+                    <h2>OpenFaaS - Advanced</h2>
+                    <img src="images/openfaas_logo.png" style="border: 0px;background: transparent;" />
+                </section>
+                <section>
+                    <h3>Asynchrone Funktionsaufrufe
+                        <a href="https://github.com/openfaas/faas/blob/master/guide/asynchronous.md" target="_blank" class="infolink"></a>
+                    </h3>
+                </section>
+                <section>
+                    <h3>Umgebungsvaliable</h3>
+                </section>
+                <section>
+                    <h3>Highload Functions</h3>
                 </section>
             </section>
             <section>
@@ -136,16 +721,11 @@
                     <img src="images/openfaas_logo.png" style="border: 0px;background: transparent;" />
                 </section>
                 <section>
-                    <h3>Verknüpfung mit externen Containern / Services</h3>
-                </section>
-                <section>
                     <h3>Zeitgesteuerte Funktionen</h3>
                 </section>
                 <section>
-                    <h3>CQRS</h3>
-                </section>
-                <section>
                     <h3>Verteilter Datenspeicher</h3>
+                    <a href="https://blog.alexellis.io/openfaas-storage-for-your-functions/" target="_blank" class="infolink"></a>
                 </section>
             </section>
         </div>
