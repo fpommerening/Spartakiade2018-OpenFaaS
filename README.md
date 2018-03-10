@@ -26,9 +26,10 @@ Hinweis: Es werden Grundkenntnisse zu Containern und dem Docker-Ökosystem (z.B.
 ## 2. Inhalt
 Die folgende Liste gibt einen Überblick über mögliche Themen.
 - Basistechologien
-  - Docker-Services
-  - Docker-Swarm
-  - Docker-Stack
+  - Docker Swarm
+  - Docker Services
+  - Docker Stack
+  - Docker Config / Stack
   
 - Einführung OpenFaaS
   - Architektur
@@ -47,10 +48,10 @@ Die folgende Liste gibt einen Überblick über mögliche Themen.
   - Auswertung Query / POST-Daten
 
 - Erweiterungen
-  - Integration verteilter Datenspeicher
-  - Funktionsüberwachung
   - eigene Funktionsvorlagen
   - Verknüpfung mit externen Containern / Services
+  - Funktionsüberwachung
+  - Integration verteilter Datenspeicher
 
 - OpenFaaS in Produktion / WAN
   - SSL
@@ -59,8 +60,7 @@ Die folgende Liste gibt einen Überblick über mögliche Themen.
 - Beispiele
   - Hallo World :-)
   - zeitgesteuerte Funktionen
-  - CQRS
-  - Alexa Backend
+  - CQRS  
       
 Hinweis: Die Beispiele sind mit .NET Core 2 erstellt. Andere Programmiersprachen z.B. node.js, python, ruby oder go sind möglich. 
 
