@@ -29,7 +29,7 @@ Die folgende Liste gibt einen Überblick über mögliche Themen.
   - Docker Swarm
   - Docker Services
   - Docker Stack
-  - Docker Config / Stack
+  - Docker Config / Secret
   
 - Einführung OpenFaaS
   - Architektur
