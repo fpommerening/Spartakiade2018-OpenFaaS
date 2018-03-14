@@ -69,6 +69,6 @@ Hinweis: Die Beispiele sind mit .NET Core 2 erstellt. Andere Programmiersprachen
 [x] Notebook mit <a href="https://code.visualstudio.com/" target="_blank">Visual Studio Code</a><br />
 [x] Dockerumgebung z.B. <a href="https://docs.docker.com/docker-for-windows/" target="_blank"> Docker for Windows</a> <br/>
 [x] HTTP-Testtool z.B. <a href="https://www.getpostman.com/" target="_blank">Postman</a><br />
-[x] <a href="https://www.microsoft.com/net/core#windowscmd" target="_blank">.NET Core 2.0 SDK </a><br />
+[x] <a href="https://www.visualstudio.com/downloads" target="_blank">Visual Studio 2017</a> mit Workload ASP.NET und Webentwicklung (Community Edition reicht)<br />
 
 <b>Die Präsentation könnt ihr, nach der Veranstaltung, auf der <a href="https://fpommerening.github.io/Spartakiade2018-OpenFaaS/#/" target="_blank">GitHub-Page</a> einsehen.</b>
