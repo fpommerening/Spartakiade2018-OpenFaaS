@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>FP.Spartakiade2018.CQRS.Messaging</AssemblyName>
+    <RootNamespace>FP.Spartakiade2018.CQRS.Messaging</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="MessageBusCnn" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="MessageBusCnn">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EasyNetQ" Version="2.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+  </ItemGroup>
+
+</Project>

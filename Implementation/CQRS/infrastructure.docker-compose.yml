@@ -1,0 +1,16 @@
+version: "3.4"
+services:
+    messagebus:
+        image: rabbitmq:3.7-management
+        networks:
+            - functions
+        ports:
+            - 15672:15672
+    documentdb:
+        image: mongo:3.6
+        networks:
+            - functions
+networks:
+  functions:
+    external:
+          name: functions

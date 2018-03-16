@@ -1,0 +1,22 @@
+version: "3.4"
+services:
+    eventhandler:
+        #image: fpommerening/openfaas-dotnet:crqs-eventhandler
+        image: crqs-eventhandler:latest
+        networks:
+            - functions
+        secrets:
+          - HandlerCnn
+          - MessageBusCnn
+secrets:
+  HandlerCnn:
+      external:
+          name: HandlerCnn
+  MessageBusCnn:
+      external:
+          name: MessageBusCnn
+
+networks:
+  functions:
+    external:
+          name: functions
