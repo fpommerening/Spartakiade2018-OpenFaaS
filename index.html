@@ -690,13 +690,32 @@
                 </section>
                 <section>
                     <h3>TDD</h3>
+                    Template herunterladen
+                    <pre><code class="shell">faas-cli template template pull https://github.com/fpommerening/openfaas-template-csharp.git </code></pre>
+                    Visual Studio Projektmappe erstellen
+                    <pre><code class="shell">dotnet new sln
+dotnet sln add ./tdd/Function.csproj</code></pre>
+Testprojekt erstellen und Abhängigkeit
+en ergänzen
+<pre><code class="shell">dotnet new mstest -lang c# --name tests
+dotnet sln add ./tests/tests.csproj
+dotnet add ./tests/tests.csproj reference ./tdd/Function.csproj
+dotnet add ./tests/tests.csproj package OpenFaaS.DotNet
+dotnet add ./tests/tests.csproj package FluentAssertions</code></pre>
                 </section>
                 <section>
                     <h3>CQRS</h3>
+                    Aktuell werden keine gemeinsamen Ordner (Common) von OpenFaaS-CLI unterstützt (<a href="https://github.com/openfaas/faas-cli/issues/322" target="_blank">GitHub-Issue</a>)
+                    <br />
+                    Das Beispiel arbeitet deshalb mit zwei Power-Shell-Scripts.
+                    <pre><code class="shell">faas-cli template template pull https://github.com/fpommerening/openfaas-template-csharp.git </code></pre>
+<br />
+Funktion erstellen
+                    <pre><code class="powershell">ps: ./template/csharp-common/new.ps1 myfunction</code></pre>
+Funktionen bauen
+<pre><code class="powershell">ps: ./template/csharp-common/build.ps1</code></pre>
                 </section>
-                <section>
-                    <h3>Zeitgesteuerte Funktionen</h3>
-                </section>
+               
             </section>
             <section>
                 <section>
@@ -704,9 +723,16 @@
                     <img src="images/openfaas_logo.png" style="border: 0px;background: transparent;" />
                 </section>
                 <section>
-                    <h3>Asynchrone Funktionsaufrufe
-                        <a href="https://github.com/openfaas/faas/blob/master/guide/asynchronous.md" target="_blank" class="infolink"></a>
-                    </h3>
+                    <h3>Asynchrone Funktionsaufrufe<a href="https://github.com/openfaas/faas/blob/master/guide/asynchronous.md" target="_blank" class="infolink"></a> </h3>
+                        Asynchrone Anfrage werden vom Gateway an eine Queue übergeben. Der Queue-Worker leitet es dann an die Function weiter.
+                        <br />
+                        Synchrone URL
+                        <pre><code class="shell">http://gateway:8080/function/myfunction</code></pre>
+                        <br />
+                        Asynchrone URL
+                        <pre><code class="shell">http://gateway:8080/async-function/myfunction</code></pre>
+						Die optionale Callback-Url aus dem Header-Parameter <i>X-Callback-Url </i> wird nach der Ausführung aufgerufen.
+                   
                 </section>
                 <section>
                     <h3>Umgebungsvaliable</h3>
@@ -715,6 +741,7 @@
                     <h3>Highload Functions</h3>
                 </section>
             </section>
+            <!--
             <section>
                 <section>
                     <h2>Erweiterungen</h2>
@@ -728,6 +755,7 @@
                     <a href="https://blog.alexellis.io/openfaas-storage-for-your-functions/" target="_blank" class="infolink"></a>
                 </section>
             </section>
+        -->
         </div>
 
 
