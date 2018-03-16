@@ -1,0 +1,27 @@
+version: "3.4"
+services:
+    proxy:
+        ports:
+            - 8080:8080
+        image: nginx:latest
+        networks:
+          - functions
+        configs:
+          - source: defaultconf
+            target: /etc/nginx/conf.d/default.conf
+
+        secrets:
+          - openfaas_htpasswd
+configs:
+  defaultconf:
+    file: ./nginx.cfg
+
+secrets:
+  openfaas_htpasswd:
+    external:
+      name: openfaas_htpasswd
+
+networks:
+  functions:
+    external:
+      name: functions
