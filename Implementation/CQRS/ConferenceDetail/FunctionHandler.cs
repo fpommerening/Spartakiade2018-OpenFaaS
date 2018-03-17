@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Net.Http;
-using Data;
+using FP.Spartakiade2018.CQRS.Data;
 using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
 using OpenFaaS.Dotnet;
