@@ -1,0 +1,10 @@
+provider:
+  name: faas
+  gateway: http://localhost:8080
+  network: functions
+
+functions:
+  highload:
+    lang: csharp-kestrel
+    handler: ./highload
+    image: highload
