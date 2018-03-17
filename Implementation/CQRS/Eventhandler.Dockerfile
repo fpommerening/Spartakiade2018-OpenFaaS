@@ -14,4 +14,4 @@ ENV REFRESHED_AT 2018-03-13
 WORKDIR /app/
 COPY --from=builder /app/out/* ./
 
-ENTRYPOINT ["dotnet", "EventHandler.dll"]
+ENTRYPOINT ["dotnet", "FP.Spartakiade2018.CQRS.EventHandler.dll"]
