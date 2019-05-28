@@ -14,7 +14,7 @@ namespace Function
         {
         }
 
-        public override void Handle(string input)
+        public override string Handle(string input)
         {
             if (Context.HttpMethod == HttpMethod.Get)
             {
@@ -24,7 +24,7 @@ namespace Function
                 {
                     var conferenceId = Guid.Parse(id[0]);
                     var conference = dl.GetConferenceDetail(conferenceId);
-                    Context.WriteContent(JsonConvert.SerializeObject(conference));
+                    return JsonConvert.SerializeObject(conference);
                 }
                 throw new ArgumentNullException("id");
             }

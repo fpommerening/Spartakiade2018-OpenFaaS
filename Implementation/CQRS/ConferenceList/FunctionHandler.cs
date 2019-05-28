@@ -13,18 +13,16 @@ namespace Function
         {
         }
 
-        public override void Handle(string input)
+        public override string Handle(string input)
         {
             if (Context.HttpMethod == HttpMethod.Get)
             {
                 var dl = new ReadDataLayer();
                 var conferenceList = dl.GetConferenceList();
-                Context.WriteContent(JsonConvert.SerializeObject(conferenceList));
+                return JsonConvert.SerializeObject(conferenceList);
             }
-            else
-            {
-                throw new NotSupportedException();
-            }
+
+            throw new NotSupportedException();
         }
     }
 }

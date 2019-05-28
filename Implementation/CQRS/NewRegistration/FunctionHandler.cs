@@ -16,7 +16,7 @@ namespace Function
         {
         }
 
-        public override void Handle(string input)
+        public override string Handle(string input)
         {
             var addConferenceCommand = JsonConvert.DeserializeObject<NewRegistration>(input);
             var conferenceHandler = new ConferenceHandler();
@@ -30,8 +30,7 @@ namespace Function
                 CommandName = "NewRegistration",
                 EventId = events.Select(x => x.Id).ToArray()
             };
-
-            Context.WriteContent(JsonConvert.SerializeObject(commandResult));
+            
             using (var bus = new EventBus())
             {
                 foreach (var e in events)
@@ -39,6 +38,8 @@ namespace Function
                     bus.Publish(e);
                 }
             }
+
+            return JsonConvert.SerializeObject(commandResult);
         }
     }
 }
