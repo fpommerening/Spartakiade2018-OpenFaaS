@@ -5,7 +5,7 @@
     <RootNamespace>FP.Spartakiade2018.WebApp</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Nancy" Version="2.0.0-clinteastwood" />
+    <PackageReference Include="Nancy" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
   </ItemGroup>
 </Project>
